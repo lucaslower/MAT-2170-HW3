@@ -80,6 +80,7 @@ def drawPartialRegularPolygon(turtle, n, m, r):
     turtle.up()
     turtle.goto(init_pos)
     turtle.setheading(init_heading)
+    turtle.down()
 
 
 def drawCircle(turtle, radius):
@@ -102,3 +103,82 @@ def drawSemicircle(turtle, radius):
     """
     # 150 sides is a decent enough approximation for most screen resolutions
     drawPartialRegularPolygon(turtle, 150, 75, radius)
+
+
+def drawHeart(turtle, radius):
+    """
+    Draws a heart with the given radius.
+    :param turtle: Turtle object.
+    :param radius: The radius to use for the square component of the heart.
+    :return: None.
+    """
+    # draw the square
+    drawRegularPolygon(turtle, 4, radius)
+    # calc apothem
+    apoth = radius/math.sqrt(2)
+    # get positioned for the first semicircle
+    turtle.up()
+    turtle.left(45)
+    turtle.forward(apoth)
+    turtle.right(90)
+    turtle.down()
+    # draw the first semicircle
+    drawSemicircle(turtle, apoth)
+    # get positioned for second semicircle
+    turtle.up()
+    turtle.right(135)
+    turtle.forward(radius)
+    turtle.right(135)
+    turtle.down()
+    # draw the second semicircle
+    drawSemicircle(turtle, apoth)
+
+
+def drawFilledHeart(turtle, radius, color):
+    """
+    Draws a filled heart with the given radius.
+    :param turtle: Turtle object.
+    :param radius: The radius to use for the square component of the heart.
+    :param color: The color (in string form, e.g. "red") to fill with.
+    :return: None.
+    """
+    # store initial values so we can reset
+    init_color_fill = turtle.fillcolor()
+    init_color_pen = turtle.pencolor()
+    # set new color
+    turtle.color(color)
+    # start fill
+    turtle.begin_fill()
+    # draw the square
+    drawRegularPolygon(turtle, 4, radius)
+    # end fill
+    turtle.end_fill()
+    # calc apothem
+    apoth = radius / math.sqrt(2)
+    # get positioned for the first semicircle
+    turtle.up()
+    turtle.left(45)
+    turtle.forward(apoth)
+    turtle.right(90)
+    turtle.down()
+    # start fill
+    turtle.begin_fill()
+    # draw the first semicircle
+    drawSemicircle(turtle, apoth)
+    # end fill
+    turtle.end_fill()
+    # get positioned for second semicircle
+    turtle.up()
+    turtle.right(135)
+    turtle.forward(radius)
+    turtle.right(135)
+    turtle.down()
+    # begin fill
+    turtle.begin_fill()
+    # draw the second semicircle
+    drawSemicircle(turtle, apoth)
+    # end fill
+    turtle.end_fill()
+    # reset color
+    turtle.fillcolor(init_color_fill)
+    turtle.pencolor(init_color_pen)
