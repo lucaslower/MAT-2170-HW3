@@ -36,3 +36,65 @@ def drawSquare(myTurtle, sideLength):
 
         # Turn to make a right angle, preparing for the next side
         myTurtle.right(90)
+
+
+def drawRegularPolygon(turtle, n, r):
+    """
+    Draws a regular n-sided polygon of radius r.
+    :param turtle: The turtle object.
+    :param n: The number of sides.
+    :param r: The radius of the polygon.
+    :return: None.
+    """
+    # calculate the length of one side
+    side_length = 2 * r * math.sin( (2 * math.pi) / (2 * n) )
+    # get the external angle of the polygon
+    ext_angle = 360/n
+
+    # DRAW
+    # go to the first vertex
+    turtle.up()
+    turtle.forward(r)
+    turtle.left( 90 + (ext_angle / 2))
+    # loop through each side
+    turtle.down()
+    for side in range(n):
+        turtle.forward(side_length)
+        turtle.left(ext_angle)
+    # go back to the middle
+    turtle.up()
+    turtle.left(90 - (ext_angle / 2))
+    turtle.forward(r)
+    turtle.left(180)
+
+def drawPartialRegularPolygon(turtle, n, m, r):
+    """
+    Draws a regular n-sided polygon of radius r.
+    :param turtle: The turtle object.
+    :param n: The number of sides.
+    :param m: The number of sides to actually draw.
+    :param r: The radius of the polygon.
+    :return: None.
+    """
+    # calculate the length of one side
+    side_length = 2 * r * math.sin( (2 * math.pi) / (2 * n) )
+    # get the external angle of the polygon
+    ext_angle = 360/n
+    # store initial turtle details so we can return easily
+    init_heading = turtle.heading()
+    init_pos = turtle.pos()
+
+    # DRAW
+    # go to the first vertex
+    turtle.up()
+    turtle.forward(r)
+    turtle.left( 90 + (ext_angle / 2))
+    # loop through each side
+    turtle.down()
+    for side in range(m):
+        turtle.forward(side_length)
+        turtle.left(ext_angle)
+    # go back to where we started
+    turtle.up()
+    turtle.goto(init_pos)
+    turtle.setheading(init_heading)
