@@ -46,26 +46,8 @@ def drawRegularPolygon(turtle, n, r):
     :param r: The radius of the polygon.
     :return: None.
     """
-    # calculate the length of one side
-    side_length = 2 * r * math.sin( (2 * math.pi) / (2 * n) )
-    # get the external angle of the polygon
-    ext_angle = 360/n
-
-    # DRAW
-    # go to the first vertex
-    turtle.up()
-    turtle.forward(r)
-    turtle.left( 90 + (ext_angle / 2))
-    # loop through each side
-    turtle.down()
-    for side in range(n):
-        turtle.forward(side_length)
-        turtle.left(ext_angle)
-    # go back to the middle
-    turtle.up()
-    turtle.left(90 - (ext_angle / 2))
-    turtle.forward(r)
-    turtle.left(180)
+    # we just use a case of the below function where n == m
+    drawPartialRegularPolygon(turtle, n, n, r)
 
 def drawPartialRegularPolygon(turtle, n, m, r):
     """
@@ -98,3 +80,25 @@ def drawPartialRegularPolygon(turtle, n, m, r):
     turtle.up()
     turtle.goto(init_pos)
     turtle.setheading(init_heading)
+
+
+def drawCircle(turtle, radius):
+    """
+    Draws an approximation of a circle using the above polygon function.
+    :param turtle: The turtle object.
+    :param radius: Radius of the circle
+    :return: None.
+    """
+    # 150 sides is a decent enough approximation for most screen resolutions
+    drawRegularPolygon(turtle, 150, radius)
+
+
+def drawSemicircle(turtle, radius):
+    """
+    Draws an approximation of a semicircle using the above polygon function.
+    :param turtle: The turtle object.
+    :param radius: Radius of the semicircle
+    :return: None.
+    """
+    # 150 sides is a decent enough approximation for most screen resolutions
+    drawPartialRegularPolygon(turtle, 150, 75, radius)
